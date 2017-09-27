@@ -1,0 +1,40 @@
+<!Doctype html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        {% if messages %}
+            {% for message in messages %}
+                {%if message.tags == 'error' %}
+                    {{message}}
+                {%endif%}
+                {%if message.tags == 'success' %}
+                    {{message}}
+            {%endif%}
+            {% endfor %}
+        {%endif%}
+        <div style="border:2px solid black;display:inline-block;padding:10px;">
+            <h1>Register Here</h1>
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="enter your name"><br>
+                <input type="text" name="alias" placeholder="enter alias"><br>
+                <input type="text" name="email" placeholder="enter your email"><br>
+                <input type="text" name="password" placeholder="enter a password"><br>
+                <input type="text" name="c_password" placeholder="confirm password"><br>
+                <p>Date of Birth:<input type="date" name="birthdate"></p>
+                <input type="submit" value="click here to register">
+            </form>
+        </div>
+        <div style="border:2px solid black;display:inline-block;padding:10px;vertical-align:top;">
+            <h1>Login Here</h1>
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                <input type="text" name="email" placeholder="enter your email"><br>
+                <input type="text" name="password" placeholder="enter a password"><br>
+                <input type="submit" value="click here to Log in">
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello, {{request.session.user_alias}}!</h1><a href="/logout">Logout</a>
+    <p>Here is a list of your friends</p>
+    <table style="border:1px solid black;">
+        <thead>
+            <tr>
+                <th style="border:1px solid black;">Alias</th>
+                <th style="border:1px solid black;">Action</th>
+            </tr>
+        </thead>
+        {%if friends%}
+            {% for friend in friends%}
+                <tr>
+                    <td style="border:1px solid black;">{{friend.alias}}</td>
+                    <td style="border:1px solid black;"><a href="/friend/{{friend.id}}">View Profile</a>  <a href="/remove/{{friend.id}}">Remove friend</a></td>
+                </tr>
+            {% endfor %}
+            {% else %}
+                <tr>
+                    <td>You have no friends</td>
+                </tr>
+        {% endif %}
+    </table>
+        <h3>Other users not on friends list</h3>
+        <table style="border:1px solid black;">
+                <thead>
+                    <tr>
+                        <th style="border:1px solid black;">Alias</th>
+                        <th style="border:1px solid black;">Action</th>
+                    </tr>
+                </thead>
+                {%if others%}
+                    {% for other in others%}
+                        <tr>
+                            <td style="border:1px solid black;"><a href="/friend/{{other.id}}">{{other.alias}}</a></td>
+                            <td style="border:1px solid black;"><form action="/add/{{other.id}}">
+                                {% csrf_token %}
+                                <button type='submit' value='add friend'>add friend</button>
+                            </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>No friends to add</td>
+                        </tr>
+                {% endif %}
+            </table>
+</body>
+</html>
